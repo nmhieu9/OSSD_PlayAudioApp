@@ -25,7 +25,7 @@ class DownloadThread(QtCore.QThread):
             }],
             "ffmpeg_location": self.ffmpeg_path,
             "outtmpl": "audio/%(title)s.%(ext)s",
-        }
+            }
 
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -39,6 +39,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()  #gọi các lớp kế thừa phương thức __init__
         uic.loadUi('playAudio.ui', self)  #tải tệp ui
+
+        self.setWindowIcon(QIcon("icon/music.png"))
+        self.setWindowTitle("Play Audio")
+        self.setFixedSize(1034,618) # Đặt kích thước cố định cho cửa sổ
 
         #tìm các widget trong file UI
         self.selectFolderButton = self.findChild(QPushButton, 'btn_chonThuMuc')
@@ -73,6 +77,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.current_index = -1  #chỉ số bài hát hiện tại
         self.repeat = False
         self.random_enabled = False
+        self.paused = False
 
         # Đảm bảo đường dẫn tới ffmpeg là chính xác
         self.ffmpeg_path = "D:\\ffmpeg\\ffmpeg-gpl\\bin"  # Thay thế bằng đường dẫn thực tế tới ffmpeg trên hệ thống của bạn
@@ -106,6 +111,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     item.setData(QtCore.Qt.UserRole, full_path)
                     self.lw_dsBH.addItem(item)  # thêm từng file nhạc phù hợp vào musicListWidget
 
+
     def play_music(self, index=None, resume=False, start_position=0):
         try:
             if index is not None:
@@ -122,9 +128,12 @@ class MainWindow(QtWidgets.QMainWindow):
                     # Nếu không phải tiếp tục từ điểm tạm dừng, tải và phát nhạc từ đầu hoặc từ vị trí được chỉ định
                     mixer.music.load(file_path)
                     mixer.music.play(start=start_position)
+                    self.paused = False  # Đặt lại trạng thái tạm dừng
                 else:
-                    #tiếp tục nhạc từ vị trí bị tạm dừng
+                    # Nếu nhạc đã được tạm dừng, tiếp tục từ vị trí đã tạm dừng
                     mixer.music.unpause()
+                    mixer.music.play(self.paused_position)
+                    self.paused = False  # Đặt lại trạng thái tạm dừng
         except Exception as e:
             # Bắt lỗi và in ra thông báo lỗi nếu có
             print(f"Error playing music: {e}")
@@ -137,9 +146,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def pause_music(self):
         # Kiểm tra nếu có nhạc đang được phát
-        if mixer.music.get_busy():
+        if mixer.music.get_busy() and not self.paused:
+            # Lưu lại vị trí hiện tại của nhạc chỉ khi nhạc chưa được tạm dừng trước đó
+            if not self.paused:
+                self.paused_position = mixer.music.get_pos()
             # Tạm dừng phát nhạc
             mixer.music.pause()
+            self.paused = True
 
     def prev_music(self):
         # Kiểm tra nếu chỉ số bài hát hiện tại lớn hơn 0 (tức là không phải bài hát đầu tiên)
