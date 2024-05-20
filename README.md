@@ -9,10 +9,10 @@
 - **Cài đặt thư viện bằng pip `pip install <tên thư viện cần cài>`** 
 - **Sau đó, clone repository này bằng cách: git clone https://github.com/nmhieu9/OSSD_PlayAudioApp.git**
 - **Tải FFmpeg chọn phiên bản phù hợp:https://github.com/BtbN/FFmpeg-Builds/releases **
-- **Sau khi tải xuống, giải nén nội dung trong file ZIP vào thư mục bạn chọn. Ví dụ E:\ffmpeg**
+- **Sau khi tải xuống, giải nén nội dung trong file ZIP vào thư mục bạn chọn. Ví dụ D:\ffmpeg\ffmpeg-gpl**
 - **Tìm kiếm "Edit the system environment variables" trong menu Start và nhấp vào kết quả. Cửa sổ System Properties sẽ mở ra.**
 - **Advanced -> Environment Variables -> Path chọn Edit -> New**
-- **Trong trường trống, nhập đường dẫn E:\ffmpeg\bin rồi nhấn OK**
+- **Trong trường trống, nhập đường dẫn D:\ffmpeg\ffmpeg-gpl\bin rồi nhấn OK**
 - **Chạy ứng dụng `python main.py`**
 
 ## Chức năng
