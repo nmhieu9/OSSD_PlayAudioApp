@@ -8,12 +8,17 @@
 ## Cài đặt
 - **Cài đặt thư viện bằng pip `pip install <tên thư viện cần cài>`** 
 - **Sau đó, clone repository này bằng cách: git clone https://github.com/nmhieu9/OSSD_PlayAudioApp.git**
+- **Tải FFmpeg chọn phiên bản phù hợp:https://github.com/BtbN/FFmpeg-Builds/releases **
+- **Sau khi tải xuống, giải nén nội dung trong file ZIP vào thư mục bạn chọn. Ví dụ C:\ffmpeg**
+- **Tìm kiếm "Edit the system environment variables" trong menu Start và nhấp vào kết quả. Cửa sổ System Properties sẽ mở ra.**
+- **Advanced -> Environment Variables -> Path chọn Edit -> New**
+- **Trong trường trống, nhập đường dẫn C:\ffmpeg\bin rồi nhấn OK**
 - **Chạy ứng dụng `python main.py`**
 
 ## Chức năng
 - **Chọn folder bài hát để phát nhạc**
 - **Phát, tạm dừng, chuyển bài hát(next, previous)** 
-- **Điều chỉnh âm lượng**
+- **Phát ngẫu nhiên, Lặp lại, Điều chỉnh âm lượng**
 - **Tải xuống file mp3 từ đường dẫn youtube**
 
 ## Hướng dẫn sử dụng
